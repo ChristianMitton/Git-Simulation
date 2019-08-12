@@ -1,0 +1,71 @@
+This is used in lieu of WTFTest since we have working parts, but they're too buggy to implement into the broader program.  This document aims to explain our project functionality, as well as it's limitations.  Each test case will be explained along with the commands needed to implement the sample.
+
+TEST 1:
+./WTFServer <port>
+./WTF configure <host> <port>
+
+should create the client/server connection assuming the port number is correct.  User will be notified of any failures
+
+TEST 2:
+./WTFServer <port>
+./WTF create <project_name>
+./WTF destroy <project_name>
+
+Should create a project and delete a project.  Creates and removes from the server_repos directory
+
+TEST 3:
+./WTFServer <port>
+./WTF create <project_name>
+./WTF update <project_name>
+./WTF upgrade <project_name>
+
+Should create a project, update, and immediately upgrade.  Will update all files in the cients directory.  The client should have all files the server contains.
+
+TEST 4:
+./WTFServer <port>
+./WTF create <project_name>
+./WTF commit <project_name>
+./WTF push <project_name>
+
+Will create a project, update local repo, and push all contents to server.  The server will update the repo with the new contents, tar the old contents into an old version (1 by default) and return success.
+
+TEST 5:
+<TEST 4>
+./WTF rollback <project_name> 1
+
+Will rollback to the previous version and delete all versions greater than the version specified.  Returns success/failure depending.
+
+TEST 5:
+./WTF create <project_name>
+(create local file "testFile.txt")
+do the following 50 times:
+./WTF add <project_name> testFile.txt
+./WTF remove <project_name>
+
+TEST 6:
+./WTF create <project_name>
+(create local file testFile1.txt)
+(create local file testFile2.txt)
+(create local file testFile3.txt)
+./WTF add <project_name> testFile1.txt
+./WTF add <project_name> testFile2.txt
+./WTF add <project_name> testFile3.txt
+./WTF update <project_name>
+
+TEST 7:
+./WTF create <project_name1>
+./WTF create <project_name2>
+./WTF create <project_name3>
+./WTF create <project_name4>
+./WTF create <project_name5>
+(create local testFile.txt)
+./WTF add <project_name3> testFile.txt
+./WTF add <project_name5> testFile.txt
+./WTF remove <project_name3> testFile.txt
+
+TEST 8:
+./WTF create <project_name1>
+(create local file testFile1.txt)
+./WTF add <project_name> testFile1.txt
+Do the following 50 times:
+./WTF update <project_name>
